@@ -29,6 +29,10 @@ export const metadata: Metadata = {
     locale: "en_US",
     siteName: "Inkwell",
   },
+  icons: {
+    icon: [{ url: "/icon.svg", type: "image/svg+xml" }],
+    apple: [{ url: "/apple-icon.svg", type: "image/svg+xml" }],
+  },
 };
 
 export default function RootLayout({

@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 180 180" role="img" aria-label="Inkwell">
+  <rect width="180" height="180" rx="40" fill="#1c1917"/>
+  <rect x="28" y="152" width="124" height="12" rx="6" fill="#d97706"/>
+  <text
+    x="90"
+    y="108"
+    text-anchor="middle"
+    font-family="Georgia, 'Times New Roman', ui-serif, serif"
+    font-size="72"
+    font-weight="700"
+    fill="#fffbeb"
+    letter-spacing="-3"
+  >In</text>
+</svg>
