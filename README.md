@@ -1,36 +1,100 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Inkwell — Professional Blog with Next.js & Sanity
 
-## Getting Started
+A polished editorial blog built with **Next.js 16**, **TypeScript**, **Tailwind CSS v4**, and **Sanity CMS**. Features a magazine-style layout, responsive design, Portable Text rendering, and an embedded Sanity Studio.
 
-First, run the development server:
+![Inkwell Blog](https://images.unsplash.com/photo-1499750310107-5fef28a66643?w=1200&h=400&fit=crop)
+
+## Features
+
+- **Editorial homepage** — Hero, featured stories, category grid, newsletter CTA
+- **Blog listing** — Filterable by category with horizontal and card layouts
+- **Article pages** — Full Portable Text support, author bio, related posts
+- **About page** — Mission, values, team, contact
+- **Sanity Studio** — Content management at `/studio`
+- **Demo content** — Works out of the box with mock data (no Sanity project required)
+
+## Quick start
 
 ```bash
+npm install
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Open [http://localhost:3000](http://localhost:3000).
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Sanity CMS setup
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+1. Create a project at [sanity.io/manage](https://www.sanity.io/manage)
+2. Copy `.env.example` to `.env.local` and add your project ID:
 
-## Learn More
+```env
+NEXT_PUBLIC_SANITY_PROJECT_ID=your-project-id
+NEXT_PUBLIC_SANITY_DATASET=production
+```
 
-To learn more about Next.js, take a look at the following resources:
+3. Deploy schemas and open Studio:
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+```bash
+npm run deploy:studio   # hosted studio (requires .env with project ID)
+npm run dev             # embedded studio at http://localhost:3000/studio
+```
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+Hosted Studio only bundles `SANITY_STUDIO_*` env vars (not `NEXT_PUBLIC_*`). Ensure `.env` has your project ID, then redeploy:
 
-## Deploy on Vercel
+```bash
+npm run deploy:studio
+```
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+You can set `SANITY_STUDIO_PROJECT_ID` explicitly or rely on auto-copy from `NEXT_PUBLIC_SANITY_PROJECT_ID` during deploy.
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+4. Seed sample content (recommended):
+
+```bash
+# Add SANITY_API_TOKEN to .env.local (Editor token from sanity.io/manage → API → Tokens)
+npm run seed
+```
+
+This uploads images and creates **3 authors**, **5 categories**, and **8 posts** (same content as the built-in demo). Re-running `npm run seed` updates documents in place. To wipe and re-seed:
+
+```bash
+npm run seed:clear
+```
+
+Or create content manually in Studio: **Authors** → **Categories** → **Posts**. Mark posts as **Featured** for the homepage hero.
+
+## Project structure
+
+```
+src/
+├── app/              # Next.js App Router pages
+├── components/       # UI, layout, blog, home sections
+├── lib/              # Data fetching & mock content
+├── sanity/           # Sanity client & image helpers
+└── types/            # TypeScript types
+sanity/
+└── schemaTypes/      # Post, Author, Category, Block Content
+```
+
+## Scripts
+
+| Command        | Description              |
+|----------------|--------------------------|
+| `npm run dev`  | Start development server |
+| `npm run build`| Production build         |
+| `npm run start`| Start production server  |
+| `npm run lint` | Run ESLint               |
+| `npm run seed` | Seed Sanity with demo content |
+| `npm run seed:clear` | Clear seed docs, then re-seed |
+
+## Tech stack
+
+- [Next.js](https://nextjs.org/) 16 (App Router)
+- [React](https://react.dev/) 19
+- [TypeScript](https://www.typescriptlang.org/)
+- [Tailwind CSS](https://tailwindcss.com/) v4
+- [Sanity](https://www.sanity.io/) v5 + [next-sanity](https://github.com/sanity-io/next-sanity)
+- [@portabletext/react](https://github.com/portabletext/react-portabletext)
+
+## License
+
+MIT
