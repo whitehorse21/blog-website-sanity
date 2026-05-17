@@ -4,6 +4,8 @@ import { CategoriesSection } from "@/components/home/CategoriesSection";
 import { Newsletter } from "@/components/home/Newsletter";
 import { getCategories, getFeaturedPosts, getPosts } from "@/lib/data";
 
+export const revalidate = 60;
+
 export default async function HomePage() {
   const [featuredPosts, allPosts, categories] = await Promise.all([
     getFeaturedPosts(),

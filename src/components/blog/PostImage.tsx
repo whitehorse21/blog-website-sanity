@@ -1,5 +1,4 @@
-import { isSanityConfigured } from "../../../sanity/env";
-import { urlFor } from "@/sanity/lib/image";
+import { resolveImageUrl } from "@/sanity/lib/resolve-image-url";
 import type { SanityImage } from "@/types/blog";
 import { cn } from "@/lib/utils";
 
@@ -12,14 +11,6 @@ interface PostImageProps {
   sizes?: string;
 }
 
-function getImageUrl(image?: SanityImage): string | null {
-  if (!image?.asset?.url) return null;
-  if (isSanityConfigured() && image.asset._id && !image.asset.url.includes("unsplash")) {
-    return urlFor(image).width(1600).height(900).auto("format").url();
-  }
-  return image.asset.url;
-}
-
 export function PostImage({
   image,
   alt,
@@ -28,7 +19,8 @@ export function PostImage({
   priority = false,
   sizes = "(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw",
 }: PostImageProps) {
-  const src = getImageUrl(image);
+  const src = resolveImageUrl(image, { width: 1600, height: 900 });
+  const altText = image?.alt || alt;
 
   if (!src) {
     return (
@@ -44,8 +36,6 @@ export function PostImage({
     );
   }
 
-  const altText = image?.alt || alt;
-
   const imgProps = {
     src,
     alt: altText,
@@ -53,7 +43,6 @@ export function PostImage({
     decoding: "async" as const,
     fetchPriority: priority ? ("high" as const) : ("auto" as const),
     loading: priority ? ("eager" as const) : ("lazy" as const),
-    // Extensions (e.g. privacy tools) may inject inline styles like filter: blur(3px) before hydration.
     suppressHydrationWarning: true,
   };
 

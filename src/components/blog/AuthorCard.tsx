@@ -1,3 +1,4 @@
+import { AuthorAvatar } from "@/components/blog/AuthorAvatar";
 import type { Author } from "@/types/blog";
 
 interface AuthorCardProps {
@@ -8,13 +9,7 @@ export function AuthorCard({ author }: AuthorCardProps) {
   return (
     <aside className="rounded-2xl border border-stone-200 bg-stone-50 p-6 sm:p-8">
       <div className="flex flex-col items-center text-center sm:flex-row sm:items-start sm:text-left">
-        {author.image?.asset?.url && (
-          <img
-            src={author.image.asset.url}
-            alt={author.name}
-            className="h-20 w-20 shrink-0 rounded-full object-cover ring-4 ring-white shadow-md"
-          />
-        )}
+        <AuthorAvatar author={author} size="lg" className="shadow-md ring-white" />
         <div className="mt-4 sm:mt-0 sm:ml-6">
           <p className="text-xs font-semibold uppercase tracking-wider text-amber-700">
             Written by

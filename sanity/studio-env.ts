@@ -1,36 +1,38 @@
 /// <reference types="vite/client" />
 
-type StudioEnvKey =
-  | "SANITY_STUDIO_PROJECT_ID"
-  | "SANITY_STUDIO_DATASET"
-  | "SANITY_STUDIO_API_VERSION";
+/**
+ * Env for Sanity CLI and hosted Studio (Vite).
+ * Use static `process.env.NEXT_PUBLIC_*` access — Next does not inline dynamic keys.
+ */
 
-function readStudioEnv(key: StudioEnvKey): string | undefined {
-  // Inlined into the hosted Studio bundle at build time
-  const fromMeta = import.meta.env[key];
-  if (fromMeta) return String(fromMeta);
+const viteProjectId = import.meta.env.SANITY_STUDIO_PROJECT_ID as string | undefined;
+const viteDataset = import.meta.env.SANITY_STUDIO_DATASET as string | undefined;
+const viteApiVersion = import.meta.env.SANITY_STUDIO_API_VERSION as string | undefined;
 
-  // Node during `sanity deploy` / `sanity dev` (before bundle)
-  if (typeof process !== "undefined" && process.env[key]) {
-    return process.env[key];
-  }
+export const studioProjectId =
+  viteProjectId ||
+  process.env.SANITY_STUDIO_PROJECT_ID ||
+  process.env.NEXT_PUBLIC_SANITY_PROJECT_ID ||
+  "";
 
-  return undefined;
-}
+export const studioDataset =
+  viteDataset ||
+  process.env.SANITY_STUDIO_DATASET ||
+  process.env.NEXT_PUBLIC_SANITY_DATASET ||
+  "production";
 
-export const studioProjectId = readStudioEnv("SANITY_STUDIO_PROJECT_ID") ?? "";
-
-export const studioDataset = readStudioEnv("SANITY_STUDIO_DATASET") ?? "production";
-
-export const studioApiVersion = readStudioEnv("SANITY_STUDIO_API_VERSION") ?? "2025-05-17";
+export const studioApiVersion =
+  viteApiVersion ||
+  process.env.SANITY_STUDIO_API_VERSION ||
+  process.env.NEXT_PUBLIC_SANITY_API_VERSION ||
+  "2025-05-17";
 
 export function getStudioProjectId(): string {
   if (!studioProjectId || studioProjectId === "your-project-id") {
     throw new Error(
       [
-        "Missing SANITY_STUDIO_PROJECT_ID.",
-        "Set NEXT_PUBLIC_SANITY_PROJECT_ID (or SANITY_STUDIO_PROJECT_ID) in .env, then run:",
-        "  npm run deploy:studio",
+        "Missing Sanity project ID.",
+        "Set NEXT_PUBLIC_SANITY_PROJECT_ID (or SANITY_STUDIO_PROJECT_ID) in .env or .env.local.",
       ].join(" "),
     );
   }

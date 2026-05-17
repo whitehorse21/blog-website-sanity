@@ -1,10 +1,11 @@
 import type { Metadata } from "next";
-import Link from "next/link";
 import { notFound } from "next/navigation";
 import { Container } from "@/components/layout/Container";
+import { BlogPageHeader } from "@/components/blog/BlogPageHeader";
 import { PostCard } from "@/components/blog/PostCard";
 import { getCategories, getPostsByCategory } from "@/lib/data";
-import { getCategoryColorClass, cn } from "@/lib/utils";
+
+export const revalidate = 60;
 
 interface PageProps {
   params: Promise<{ slug: string }>;
@@ -36,33 +37,15 @@ export default async function CategoryPage({ params }: PageProps) {
 
   return (
     <>
-      <section className="border-b border-stone-200/80 bg-white py-14 sm:py-18">
-        <Container>
-          <Link
-            href="/blog"
-            className="text-sm font-medium text-amber-700 transition-colors hover:text-amber-900"
-          >
-            ← All articles
-          </Link>
-          <span
-            className={cn(
-              "mt-6 inline-flex rounded-full px-3 py-1 text-xs font-medium ring-1 ring-inset",
-              getCategoryColorClass(category.color),
-            )}
-          >
-            Category
-          </span>
-          <h1 className="font-display mt-4 text-4xl font-semibold text-stone-900 sm:text-5xl">
-            {category.title}
-          </h1>
-          {category.description && (
-            <p className="mt-4 max-w-2xl text-lg text-stone-600">{category.description}</p>
-          )}
-          <p className="mt-6 text-sm text-stone-500">
-            {posts.length} {posts.length === 1 ? "article" : "articles"}
-          </p>
-        </Container>
-      </section>
+      <BlogPageHeader
+        title={category.title}
+        description={category.description}
+        articleCount={posts.length}
+        showBackLink
+        categoryBadge={category}
+        categories={categories}
+        activeCategorySlug={slug}
+      />
 
       <section className="py-14 sm:py-16">
         <Container>

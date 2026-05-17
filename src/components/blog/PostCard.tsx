@@ -1,9 +1,10 @@
 import Link from "next/link";
+import { AuthorAvatar } from "./AuthorAvatar";
 import { PostImage } from "./PostImage";
 import { Badge } from "@/components/ui/Badge";
-import { formatShortDate } from "@/lib/utils";
+import { ROUTES } from "@/lib/constants";
+import { cn, formatReadingTime, formatShortDate } from "@/lib/utils";
 import type { Post } from "@/types/blog";
-import { cn } from "@/lib/utils";
 
 interface PostCardProps {
   post: Post;
@@ -13,6 +14,7 @@ interface PostCardProps {
 
 export function PostCard({ post, variant = "default", className }: PostCardProps) {
   const primaryCategory = post.categories[0];
+  const postHref = ROUTES.blogPost(post.slug);
 
   if (variant === "horizontal") {
     return (
@@ -23,7 +25,7 @@ export function PostCard({ post, variant = "default", className }: PostCardProps
         )}
       >
         <Link
-          href={`/blog/${post.slug}`}
+          href={postHref}
           className="relative aspect-[4/3] overflow-hidden rounded-xl sm:aspect-auto sm:min-h-[180px]"
         >
           <PostImage image={post.mainImage} alt={post.title} sizes="280px" />
@@ -37,7 +39,7 @@ export function PostCard({ post, variant = "default", className }: PostCardProps
   if (variant === "compact") {
     return (
       <article className={cn("group", className)}>
-        <Link href={`/blog/${post.slug}`} className="flex gap-4">
+        <Link href={postHref} className="flex gap-4">
           <div className="relative h-20 w-20 shrink-0 overflow-hidden rounded-lg">
             <PostImage image={post.mainImage} alt={post.title} sizes="80px" />
           </div>
@@ -59,10 +61,7 @@ export function PostCard({ post, variant = "default", className }: PostCardProps
         className,
       )}
     >
-      <Link
-        href={`/blog/${post.slug}`}
-        className="relative aspect-[16/10] overflow-hidden"
-      >
+      <Link href={postHref} className="relative aspect-[16/10] overflow-hidden">
         <PostImage image={post.mainImage} alt={post.title} />
         <div className="absolute inset-0 bg-gradient-to-t from-stone-900/50 via-transparent to-transparent opacity-0 transition-opacity duration-300 group-hover:opacity-100" />
       </Link>
@@ -86,15 +85,15 @@ function PostCardContent({
         {primaryCategory && (
           <Badge
             label={primaryCategory.title}
-            href={`/blog/category/${primaryCategory.slug}`}
+            href={ROUTES.blogCategory(primaryCategory.slug)}
             color={primaryCategory.color}
           />
         )}
         {post.readingTime && (
-          <span className="text-xs text-stone-400">{post.readingTime} min read</span>
+          <span className="text-xs text-stone-400">{formatReadingTime(post.readingTime)}</span>
         )}
       </div>
-      <Link href={`/blog/${post.slug}`}>
+      <Link href={ROUTES.blogPost(post.slug)}>
         <h3 className="font-display text-xl font-semibold leading-snug text-stone-900 transition-colors group-hover:text-amber-800 sm:text-2xl">
           {post.title}
         </h3>
@@ -104,14 +103,7 @@ function PostCardContent({
       </p>
       <div className="mt-5 flex items-center justify-between border-t border-stone-100 pt-4">
         <div className="flex items-center gap-2.5">
-          {post.author.image?.asset?.url && (
-            <img
-              src={post.author.image.asset.url}
-              alt={post.author.name}
-              className="h-8 w-8 rounded-full object-cover ring-2 ring-stone-100"
-              suppressHydrationWarning
-            />
-          )}
+          <AuthorAvatar author={post.author} size="sm" />
           <div>
             <p className="text-sm font-medium text-stone-800">{post.author.name}</p>
             <p className="text-xs text-stone-500">{formatShortDate(post.publishedAt)}</p>

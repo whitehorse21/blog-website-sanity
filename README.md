@@ -25,12 +25,14 @@ Open [http://localhost:3000](http://localhost:3000).
 ## Sanity CMS setup
 
 1. Create a project at [sanity.io/manage](https://www.sanity.io/manage)
-2. Copy `.env.example` to `.env.local` and add your project ID:
+2. Copy `.env.example` to `.env` (or `.env.local` if you prefer local-only overrides) and add your project ID:
 
 ```env
 NEXT_PUBLIC_SANITY_PROJECT_ID=your-project-id
 NEXT_PUBLIC_SANITY_DATASET=production
 ```
+
+Next.js loads `.env` automatically; you do not need a separate `.env.local` file.
 
 3. Deploy schemas and open Studio:
 
@@ -50,7 +52,7 @@ You can set `SANITY_STUDIO_PROJECT_ID` explicitly or rely on auto-copy from `NEX
 4. Seed sample content (recommended):
 
 ```bash
-# Add SANITY_API_TOKEN to .env.local (Editor token from sanity.io/manage → API → Tokens)
+# Add SANITY_API_TOKEN to .env (Editor token from sanity.io/manage → API → Tokens)
 npm run seed
 ```
 

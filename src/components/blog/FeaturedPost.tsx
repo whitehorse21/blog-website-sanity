@@ -1,7 +1,8 @@
 import Link from "next/link";
 import { PostImage } from "./PostImage";
+import { PostByline } from "./PostByline";
 import { Badge } from "@/components/ui/Badge";
-import { formatDate } from "@/lib/utils";
+import { ROUTES } from "@/lib/constants";
 import type { Post } from "@/types/blog";
 
 interface FeaturedPostProps {
@@ -11,7 +12,7 @@ interface FeaturedPostProps {
 
 export function FeaturedPost({ post, size = "hero" }: FeaturedPostProps) {
   const primaryCategory = post.categories[0];
-  const postHref = `/blog/${post.slug}`;
+  const postHref = ROUTES.blogPost(post.slug);
 
   if (size === "side") {
     return (
@@ -27,9 +28,13 @@ export function FeaturedPost({ post, size = "hero" }: FeaturedPostProps) {
           <h3 className="font-display text-lg font-semibold leading-snug text-white sm:text-xl">
             {post.title}
           </h3>
-          <p className="mt-2 text-xs text-stone-300">
-            {post.author.name} · {formatDate(post.publishedAt)}
-          </p>
+          <PostByline
+            author={post.author}
+            publishedAt={post.publishedAt}
+            showAvatar={false}
+            variant="light"
+            className="mt-2 text-xs"
+          />
         </div>
         <Link href={postHref} className="absolute inset-0 z-0 rounded-2xl" aria-label={post.title}>
           <span className="sr-only">{post.title}</span>
@@ -55,7 +60,7 @@ export function FeaturedPost({ post, size = "hero" }: FeaturedPostProps) {
           {primaryCategory && (
             <Badge
               label={primaryCategory.title}
-              href={`/blog/category/${primaryCategory.slug}`}
+              href={ROUTES.blogCategory(primaryCategory.slug)}
               color={primaryCategory.color}
               className="pointer-events-auto mb-4"
             />
@@ -66,17 +71,14 @@ export function FeaturedPost({ post, size = "hero" }: FeaturedPostProps) {
           <p className="mt-4 max-w-2xl text-base leading-relaxed text-stone-300 sm:text-lg line-clamp-2">
             {post.excerpt}
           </p>
-          <div className="mt-6 flex flex-wrap items-center gap-4 text-sm text-stone-400">
-            <span className="font-medium text-stone-200">{post.author.name}</span>
-            <span aria-hidden>·</span>
-            <time dateTime={post.publishedAt}>{formatDate(post.publishedAt)}</time>
-            {post.readingTime && (
-              <>
-                <span aria-hidden>·</span>
-                <span>{post.readingTime} min read</span>
-              </>
-            )}
-          </div>
+          <PostByline
+            author={post.author}
+            publishedAt={post.publishedAt}
+            readingTime={post.readingTime}
+            showAvatar={false}
+            variant="light"
+            className="mt-6 gap-4"
+          />
         </div>
       </div>
       <Link href={postHref} className="absolute inset-0 z-0" aria-label={post.title}>

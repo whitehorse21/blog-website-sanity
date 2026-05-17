@@ -1,14 +1,17 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
-import Link from "next/link";
 import { Container } from "@/components/layout/Container";
-import { PostImage } from "@/components/blog/PostImage";
-import { PostCard } from "@/components/blog/PostCard";
-import { PortableTextRenderer } from "@/components/blog/PortableTextRenderer";
 import { AuthorCard } from "@/components/blog/AuthorCard";
+import { BackLink } from "@/components/blog/BackLink";
+import { PostByline } from "@/components/blog/PostByline";
+import { PostCard } from "@/components/blog/PostCard";
+import { PostImage } from "@/components/blog/PostImage";
+import { PortableTextRenderer } from "@/components/blog/PortableTextRenderer";
 import { Badge } from "@/components/ui/Badge";
+import { ROUTES } from "@/lib/constants";
 import { getPostBySlug, getPostSlugs, getRelatedPosts } from "@/lib/data";
-import { formatDate } from "@/lib/utils";
+
+export const revalidate = 60;
 
 interface PageProps {
   params: Promise<{ slug: string }>;
@@ -43,8 +46,7 @@ export default async function PostPage({ params }: PageProps) {
 
   if (!post) notFound();
 
-  const categoryIds = post.categories.map((c) => c._id);
-  const relatedPosts = await getRelatedPosts(slug, categoryIds);
+  const relatedPosts = await getRelatedPosts(slug);
 
   return (
     <article>
@@ -56,7 +58,7 @@ export default async function PostPage({ params }: PageProps) {
                 <Badge
                   key={cat._id}
                   label={cat.title}
-                  href={`/blog/category/${cat.slug}`}
+                  href={ROUTES.blogCategory(cat.slug)}
                   color={cat.color}
                 />
               ))}
@@ -65,26 +67,13 @@ export default async function PostPage({ params }: PageProps) {
               {post.title}
             </h1>
             <p className="mt-6 text-lg leading-relaxed text-stone-600 sm:text-xl">{post.excerpt}</p>
-            <div className="mt-8 flex flex-wrap items-center justify-center gap-4 text-sm text-stone-500">
-              <div className="flex items-center gap-2">
-                {post.author.image?.asset?.url && (
-                  <img
-                    src={post.author.image.asset.url}
-                    alt={post.author.name}
-                    className="h-10 w-10 rounded-full object-cover ring-2 ring-stone-100"
-                  />
-                )}
-                <span className="font-medium text-stone-800">{post.author.name}</span>
-              </div>
-              <span aria-hidden>·</span>
-              <time dateTime={post.publishedAt}>{formatDate(post.publishedAt)}</time>
-              {post.readingTime && (
-                <>
-                  <span aria-hidden>·</span>
-                  <span>{post.readingTime} min read</span>
-                </>
-              )}
-            </div>
+            <PostByline
+              author={post.author}
+              publishedAt={post.publishedAt}
+              readingTime={post.readingTime}
+              avatarSize="md"
+              className="mt-8 justify-center gap-4"
+            />
           </div>
         </Container>
       </header>
@@ -121,12 +110,7 @@ export default async function PostPage({ params }: PageProps) {
               ))}
             </div>
             <div className="mt-10 text-center">
-              <Link
-                href="/blog"
-                className="text-sm font-medium text-amber-700 transition-colors hover:text-amber-900"
-              >
-                ← Back to all articles
-              </Link>
+              <BackLink label="← Back to all articles" />
             </div>
           </Container>
         </section>

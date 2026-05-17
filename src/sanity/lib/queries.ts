@@ -1,5 +1,16 @@
 import { defineQuery } from "next-sanity";
 
+const authorFields = /* groq */ `
+  _id,
+  name,
+  "slug": slug.current,
+  role,
+  bio,
+  image { asset->{ _id, url }, alt },
+  twitter,
+  linkedin
+`;
+
 const postFields = /* groq */ `
   _id,
   title,
@@ -12,16 +23,7 @@ const postFields = /* groq */ `
     asset->{ _id, url },
     alt
   },
-  author->{
-    _id,
-    name,
-    "slug": slug.current,
-    role,
-    bio,
-    image { asset->{ _id, url }, alt },
-    twitter,
-    linkedin
-  },
+  author->{ ${authorFields} },
   categories[]->{
     _id,
     title,
@@ -75,5 +77,11 @@ export const relatedPostsQuery = defineQuery(/* groq */ `
   *[_type == "post" && slug.current != $slug && count(categories[@._ref in ^.^.categories[]._ref]) > 0]
     | order(publishedAt desc)[0...3] {
     ${postFields}
+  }
+`);
+
+export const authorsQuery = defineQuery(/* groq */ `
+  *[_type == "author"] | order(name asc) {
+    ${authorFields}
   }
 `);

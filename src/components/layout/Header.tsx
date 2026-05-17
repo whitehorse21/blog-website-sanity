@@ -3,13 +3,14 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useState } from "react";
-import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/Button";
+import { ROUTES } from "@/lib/constants";
+import { cn } from "@/lib/utils";
 
 const navLinks = [
-  { href: "/", label: "Home" },
-  { href: "/blog", label: "Articles" },
-  { href: "/about", label: "About" },
+  { href: ROUTES.home, label: "Home" },
+  { href: ROUTES.blog, label: "Articles" },
+  { href: ROUTES.about, label: "About" },
 ];
 
 export function Header() {
@@ -19,7 +20,7 @@ export function Header() {
   return (
     <header className="sticky top-0 z-50 border-b border-stone-200/80 bg-[#FAF8F5]/90 backdrop-blur-md">
       <div className="mx-auto flex max-w-7xl items-center justify-between px-5 py-4 sm:px-6 lg:px-8">
-        <Link href="/" className="group flex items-center gap-2.5">
+        <Link href={ROUTES.home} className="group flex items-center gap-2.5">
           <span className="flex h-9 w-9 items-center justify-center rounded-lg bg-stone-900 text-sm font-bold tracking-tight text-amber-50 transition-transform group-hover:scale-105">
             In
           </span>
@@ -47,12 +48,12 @@ export function Header() {
 
         <div className="hidden items-center gap-3 md:flex">
           <Link
-            href="/studio"
+            href={ROUTES.studio}
             className="text-sm font-medium text-stone-500 transition-colors hover:text-stone-800"
           >
             Studio
           </Link>
-          <Button href="/blog" variant="secondary" className="!px-5 !py-2.5 text-sm">
+          <Button href={ROUTES.blog} variant="secondary" className="!px-5 !py-2.5 text-sm">
             Read latest
           </Button>
         </div>
@@ -96,7 +97,7 @@ export function Header() {
               </Link>
             ))}
             <Link
-              href="/studio"
+              href={ROUTES.studio}
               onClick={() => setMobileOpen(false)}
               className="rounded-lg px-4 py-3 text-sm font-medium text-stone-500 hover:bg-stone-100"
             >

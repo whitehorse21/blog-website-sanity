@@ -11,14 +11,13 @@
  *   SANITY_API_TOKEN (Editor permissions)
  */
 
-import { config } from "dotenv";
 import { createClient, type SanityClient } from "@sanity/client";
-import { mockAuthors, mockCategories, mockPosts } from "../src/lib/mock-data";
+import { loadEnvFiles } from "../sanity/load-env";
+import { mockAuthors, mockCategories, mockPosts } from "../src/lib/mock";
 import { unsplashPhotos } from "../src/lib/unsplash";
 import type { Post } from "../src/types/blog";
 
-config({ path: ".env.local" });
-config({ path: ".env" });
+loadEnvFiles();
 
 const projectId = process.env.NEXT_PUBLIC_SANITY_PROJECT_ID;
 const dataset = process.env.NEXT_PUBLIC_SANITY_DATASET || "production";
@@ -29,11 +28,11 @@ const shouldClear = process.argv.includes("--clear");
 
 function requireEnv() {
   if (!projectId || projectId === "your-project-id") {
-    throw new Error("Set NEXT_PUBLIC_SANITY_PROJECT_ID in .env.local");
+    throw new Error("Set NEXT_PUBLIC_SANITY_PROJECT_ID in .env or .env.local");
   }
   if (!token) {
     throw new Error(
-      "Set SANITY_API_TOKEN in .env.local (create at sanity.io/manage → API → Tokens, Editor role)",
+      "Set SANITY_API_TOKEN in .env or .env.local (create at sanity.io/manage → API → Tokens, Editor role)",
     );
   }
 }

@@ -1,18 +1,7 @@
+/**
+ * Sanity CLI entry (deploy, schema push). Re-exports the app config from src/.
+ * Env: mirror-env runs in Node; NEXT_PUBLIC_* is read via sanity/env.ts.
+ */
 import "./sanity/mirror-env";
 
-import { defineConfig } from "sanity";
-import { structureTool } from "sanity/structure";
-import { visionTool } from "@sanity/vision";
-import { schemaTypes } from "./sanity/schemaTypes";
-import { getStudioProjectId, studioApiVersion, studioDataset } from "./sanity/studio-env";
-
-export default defineConfig({
-  name: "inkwell-blog",
-  title: "Inkwell Blog",
-  projectId: getStudioProjectId(),
-  dataset: studioDataset,
-  apiVersion: studioApiVersion,
-  basePath: "/studio",
-  plugins: [structureTool(), visionTool()],
-  schema: { types: schemaTypes },
-});
+export { default } from "./src/sanity/studio-config";

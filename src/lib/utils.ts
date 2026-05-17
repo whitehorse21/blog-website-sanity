@@ -26,3 +26,11 @@ const categoryColorMap: Record<string, string> = {
 export function getCategoryColorClass(color?: string) {
   return categoryColorMap[color ?? "amber"] ?? categoryColorMap.amber;
 }
+
+export function formatArticleCount(count: number) {
+  return `${count} ${count === 1 ? "article" : "articles"}`;
+}
+
+export function formatReadingTime(minutes: number) {
+  return `${minutes} min read`;
+}

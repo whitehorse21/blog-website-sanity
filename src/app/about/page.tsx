@@ -1,46 +1,30 @@
 import type { Metadata } from "next";
+import { TeamMemberCard } from "@/components/about/TeamMemberCard";
 import { Container } from "@/components/layout/Container";
+import { SectionHeader } from "@/components/ui/SectionHeader";
 import { Button } from "@/components/ui/Button";
-import { mockAuthors } from "@/lib/mock-data";
+import { ABOUT_HERO_IMAGE, aboutValues } from "@/lib/about-content";
+import { ROUTES } from "@/lib/constants";
+import { getAuthors } from "@/lib/data";
 
 export const metadata: Metadata = {
   title: "About",
   description: "Learn about Inkwell — our mission, team, and editorial standards.",
 };
 
-const values = [
-  {
-    title: "Depth over speed",
-    description:
-      "We publish fewer pieces, but each one is researched, edited, and designed to reward careful reading.",
-  },
-  {
-    title: "Craft in every detail",
-    description:
-      "From typography to photography, we treat the reading experience as a design problem worth solving.",
-  },
-  {
-    title: "Honest perspectives",
-    description:
-      "Our writers bring expertise and point of view. We label opinion clearly and correct errors transparently.",
-  },
-];
+export default async function AboutPage() {
+  const authors = await getAuthors();
 
-export default function AboutPage() {
   return (
     <>
       <section className="border-b border-stone-200/80 bg-white py-16 sm:py-24">
         <Container>
-          <div className="mx-auto max-w-3xl text-center">
-            <p className="text-xs font-semibold uppercase tracking-widest text-amber-700">About us</p>
-            <h1 className="font-display mt-4 text-4xl font-semibold text-stone-900 sm:text-5xl lg:text-6xl">
-              We believe stories shape how we see the world
-            </h1>
-            <p className="mt-6 text-lg leading-relaxed text-stone-600 sm:text-xl">
-              Inkwell launched in 2024 as an independent editorial studio—a place for designers,
-              technologists, and culture writers to publish work that deserves more than a scroll.
-            </p>
-          </div>
+          <SectionHeader
+            eyebrow="About us"
+            title="We believe stories shape how we see the world"
+            description="Inkwell launched in 2024 as an independent editorial studio—a place for designers, technologists, and culture writers to publish work that deserves more than a scroll."
+            align="center"
+          />
         </Container>
       </section>
 
@@ -50,11 +34,12 @@ export default function AboutPage() {
             <div className="relative aspect-[4/5] overflow-hidden rounded-3xl bg-stone-200 shadow-xl">
               {/* eslint-disable-next-line @next/next/no-img-element */}
               <img
-                src="https://images.unsplash.com/photo-1497366216548-37526070297c?auto=format&fit=crop&w=800&q=80"
+                src={ABOUT_HERO_IMAGE}
                 alt="Inkwell editorial studio"
                 className="absolute inset-0 h-full w-full object-cover"
                 sizes="(max-width: 1024px) 100vw, 50vw"
                 decoding="async"
+                suppressHydrationWarning
               />
             </div>
             <div>
@@ -71,7 +56,7 @@ export default function AboutPage() {
                 while keeping the front end fast and beautiful with Next.js.
               </p>
               <div className="mt-8">
-                <Button href="/blog" variant="secondary">
+                <Button href={ROUTES.blog} variant="secondary">
                   Read our stories
                 </Button>
               </div>
@@ -86,7 +71,7 @@ export default function AboutPage() {
             What we stand for
           </h2>
           <div className="mt-12 grid gap-8 md:grid-cols-3">
-            {values.map((value) => (
+            {aboutValues.map((value) => (
               <div
                 key={value.title}
                 className="rounded-2xl border border-stone-200/80 bg-white p-8 shadow-sm"
@@ -102,31 +87,15 @@ export default function AboutPage() {
 
       <section id="team" className="py-16 sm:py-20">
         <Container>
-          <div className="text-center">
-            <p className="text-xs font-semibold uppercase tracking-widest text-amber-700">The team</p>
-            <h2 className="font-display mt-3 text-3xl font-semibold text-stone-900 sm:text-4xl">
-              Meet our editors
-            </h2>
-          </div>
+          <SectionHeader
+            eyebrow="The team"
+            title="Meet our editors"
+            align="center"
+            className="justify-center"
+          />
           <div className="mt-12 grid gap-8 sm:grid-cols-2 lg:grid-cols-3">
-            {mockAuthors.map((author) => (
-              <div
-                key={author._id}
-                className="group rounded-2xl border border-stone-200/80 bg-white p-6 text-center shadow-sm transition-shadow hover:shadow-md"
-              >
-                {author.image?.asset?.url && (
-                  <img
-                    src={author.image.asset.url}
-                    alt={author.name}
-                    className="mx-auto h-24 w-24 rounded-full object-cover ring-4 ring-stone-50"
-                  />
-                )}
-                <h3 className="font-display mt-5 text-xl font-semibold text-stone-900">{author.name}</h3>
-                {author.role && <p className="text-sm text-amber-700">{author.role}</p>}
-                {author.bio && (
-                  <p className="mt-3 text-sm leading-relaxed text-stone-600">{author.bio}</p>
-                )}
-              </div>
+            {authors.map((author) => (
+              <TeamMemberCard key={author._id} author={author} />
             ))}
           </div>
         </Container>
