@@ -26,12 +26,12 @@ export function PostImage({
     return (
       <div
         className={cn(
-          "flex items-center justify-center bg-gradient-to-br from-stone-200 to-stone-300",
+          "flex items-center justify-center bg-gradient-to-br from-surface-muted to-border",
           fill && "absolute inset-0",
           className,
         )}
       >
-        <span className="text-sm text-stone-500">No image</span>
+        <span className="text-sm text-subtle-foreground">No image</span>
       </div>
     );
   }

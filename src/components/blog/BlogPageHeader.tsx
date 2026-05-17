@@ -1,6 +1,7 @@
 import { Container } from "@/components/layout/Container";
 import { BackLink } from "@/components/blog/BackLink";
 import { CategoryNav } from "@/components/blog/CategoryNav";
+import { section } from "@/lib/layout";
 import { cn, formatArticleCount, getCategoryColorClass } from "@/lib/utils";
 import type { Category } from "@/types/blog";
 
@@ -26,9 +27,10 @@ export function BlogPageHeader({
   categoryBadge,
 }: BlogPageHeaderProps) {
   return (
-    <section className="border-b border-stone-200/80 bg-white py-14 sm:py-18">
-      <Container>
-        {showBackLink && <BackLink className="mb-6 block" />}
+    <section className={`relative border-b border-border bg-surface ${section.pyCompact}`}>
+      <div className="pointer-events-none absolute inset-0 section-mesh opacity-30" aria-hidden />
+      <Container className="relative">
+        {showBackLink && <BackLink className="mb-8 block" />}
         {categoryBadge && (
           <span
             className={cn(
@@ -40,11 +42,13 @@ export function BlogPageHeader({
           </span>
         )}
         {eyebrow && !categoryBadge && (
-          <p className="text-xs font-semibold uppercase tracking-widest text-amber-700">{eyebrow}</p>
+          <p className="text-xs font-semibold uppercase tracking-widest text-amber-700 dark:text-amber-400">
+            {eyebrow}
+          </p>
         )}
         <h1
           className={cn(
-            "font-display text-4xl font-semibold text-stone-900 sm:text-5xl",
+            "font-display text-4xl font-semibold text-foreground sm:text-5xl",
             (eyebrow || categoryBadge) && "mt-3",
             categoryBadge && "mt-4",
           )}
@@ -52,16 +56,16 @@ export function BlogPageHeader({
           {title}
         </h1>
         {description && (
-          <p className="mt-4 max-w-2xl text-lg text-stone-600">{description}</p>
+          <p className="mt-5 max-w-2xl text-lg leading-relaxed text-muted-foreground">{description}</p>
         )}
         {articleCount != null && (
-          <p className="mt-6 text-sm text-stone-500">{formatArticleCount(articleCount)}</p>
+          <p className="mt-6 text-sm text-subtle-foreground">{formatArticleCount(articleCount)}</p>
         )}
         {categories && categories.length > 0 && (
           <CategoryNav
             categories={categories}
             activeSlug={activeCategorySlug}
-            className="mt-10"
+            className="mt-12"
           />
         )}
       </Container>

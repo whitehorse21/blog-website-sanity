@@ -15,7 +15,7 @@ export function SiteChrome({ children }: { children: React.ReactNode }) {
   return (
     <>
       <Header />
-      <main className="flex-1">{children}</main>
+      <main className="flex-1 bg-background">{children}</main>
       <Footer />
     </>
   );

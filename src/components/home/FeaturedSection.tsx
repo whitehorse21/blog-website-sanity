@@ -3,6 +3,7 @@ import { FeaturedPost } from "@/components/blog/FeaturedPost";
 import { PostCard } from "@/components/blog/PostCard";
 import { SectionHeader } from "@/components/ui/SectionHeader";
 import { ROUTES } from "@/lib/constants";
+import { section } from "@/lib/layout";
 import type { Post } from "@/types/blog";
 
 interface FeaturedSectionProps {
@@ -15,7 +16,7 @@ export function FeaturedSection({ featuredPosts, recentPosts }: FeaturedSectionP
   const gridPosts = recentPosts.filter((p) => p._id !== hero?._id).slice(0, 6);
 
   return (
-    <section className="py-16 sm:py-20">
+    <section className={`border-b border-border bg-surface-muted ${section.py}`}>
       <Container>
         <SectionHeader
           eyebrow="Featured"
@@ -24,12 +25,10 @@ export function FeaturedSection({ featuredPosts, recentPosts }: FeaturedSectionP
         />
 
         {hero && (
-          <div className="mt-10 grid gap-6 lg:grid-cols-2 lg:gap-8">
-            <div className="lg:col-span-2">
-              <FeaturedPost post={hero} size="hero" />
-            </div>
+          <div className={`${section.headerMb} ${section.stack}`}>
+            <FeaturedPost post={hero} size="hero" />
             {sideFeatured.length > 0 && (
-              <div className="grid gap-6 sm:grid-cols-2 lg:col-span-2">
+              <div className={`grid sm:grid-cols-2 ${section.cardGrid}`}>
                 {sideFeatured.slice(0, 2).map((post) => (
                   <FeaturedPost key={post._id} post={post} size="side" />
                 ))}
@@ -38,9 +37,14 @@ export function FeaturedSection({ featuredPosts, recentPosts }: FeaturedSectionP
           </div>
         )}
 
-        <div className="mt-16">
-          <h3 className="font-display text-2xl font-semibold text-stone-900">Latest articles</h3>
-          <div className="mt-8 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+        <div className={section.stack}>
+          <div className="flex flex-col gap-3 sm:flex-row sm:items-end sm:justify-between">
+            <h3 className="font-display text-2xl font-semibold text-foreground sm:text-3xl">
+              Latest articles
+            </h3>
+            <p className="text-sm text-subtle-foreground">Fresh from the editorial desk</p>
+          </div>
+          <div className={`grid sm:grid-cols-2 lg:grid-cols-3 ${section.cardGrid}`}>
             {gridPosts.map((post) => (
               <PostCard key={post._id} post={post} />
             ))}

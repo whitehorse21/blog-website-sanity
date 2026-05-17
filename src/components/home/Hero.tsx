@@ -1,34 +1,41 @@
 import { Button } from "@/components/ui/Button";
 import { Container } from "@/components/layout/Container";
+import { section } from "@/lib/layout";
 
 export function Hero() {
   return (
-    <section className="relative overflow-hidden border-b border-stone-200/80 bg-[#FAF8F5]">
+    <section className="relative overflow-hidden border-b border-border bg-background">
+      <div className="pointer-events-none absolute inset-0 section-mesh" aria-hidden />
       <div
-        className="pointer-events-none absolute inset-0 opacity-[0.35]"
+        className="pointer-events-none absolute inset-0 opacity-[0.03] dark:opacity-[0.06]"
         style={{
-          backgroundImage: `radial-gradient(circle at 20% 50%, rgba(217, 119, 6, 0.08) 0%, transparent 50%),
-            radial-gradient(circle at 80% 20%, rgba(120, 113, 108, 0.06) 0%, transparent 40%)`,
+          backgroundImage: `linear-gradient(var(--border) 1px, transparent 1px),
+            linear-gradient(90deg, var(--border) 1px, transparent 1px)`,
+          backgroundSize: "48px 48px",
         }}
+        aria-hidden
       />
-      <Container className="relative py-16 sm:py-20 lg:py-28">
+      <Container className={`relative ${section.py}`}>
         <div className="mx-auto max-w-4xl text-center">
-          <p className="inline-flex items-center gap-2 rounded-full border border-amber-200/80 bg-amber-50 px-4 py-1.5 text-xs font-semibold uppercase tracking-widest text-amber-800">
-            <span className="h-1.5 w-1.5 rounded-full bg-amber-500" />
+          <p className="inline-flex items-center gap-2.5 rounded-full border border-border bg-surface-elevated px-5 py-2 text-xs font-semibold uppercase tracking-[0.2em] text-accent-foreground shadow-sm">
+            <span className="h-2 w-2 animate-pulse rounded-full bg-amber-500" />
             Editorial · Design · Culture
           </p>
-          <h1 className="font-display mt-8 text-4xl font-semibold leading-[1.1] tracking-tight text-stone-900 sm:text-5xl lg:text-7xl">
+          <h1 className="font-display mt-10 text-4xl font-semibold leading-[1.08] tracking-tight text-foreground sm:mt-12 sm:text-5xl lg:text-7xl">
             Stories crafted with{" "}
-            <span className="relative whitespace-nowrap">
-              <span className="relative z-10">intention</span>
-              <span className="absolute -bottom-1 left-0 right-0 h-3 bg-amber-200/60 -rotate-1" aria-hidden />
+            <span className="relative inline-block whitespace-nowrap">
+              <span className="relative z-10 text-amber-700 dark:text-amber-400">intention</span>
+              <span
+                className="absolute -bottom-2 left-0 right-0 h-4 -rotate-1 rounded-sm bg-amber-200/70 dark:bg-amber-500/25"
+                aria-hidden
+              />
             </span>
           </h1>
-          <p className="mx-auto mt-6 max-w-2xl text-lg leading-relaxed text-stone-600 sm:text-xl">
+          <p className="mx-auto mt-8 max-w-2xl text-lg leading-relaxed text-muted-foreground sm:text-xl sm:leading-relaxed">
             Inkwell is a modern publication for curious minds—exploring design, technology,
             culture, and the ideas that shape how we live and create.
           </p>
-          <div className="mt-10 flex flex-col items-center justify-center gap-4 sm:flex-row">
+          <div className="mt-12 flex flex-col items-center justify-center gap-4 sm:flex-row sm:gap-5">
             <Button href="/blog" variant="primary">
               Explore articles
             </Button>
@@ -38,7 +45,7 @@ export function Hero() {
           </div>
         </div>
 
-        <div className="mt-16 grid grid-cols-2 gap-4 border-t border-stone-200/80 pt-12 sm:grid-cols-4 lg:mt-20">
+        <div className="mt-20 grid grid-cols-2 gap-8 border-t border-border pt-14 sm:grid-cols-4 lg:mt-24 lg:gap-10 lg:pt-16">
           {[
             { value: "120+", label: "Published stories" },
             { value: "45k", label: "Monthly readers" },
@@ -46,10 +53,8 @@ export function Hero() {
             { value: "5", label: "Editorial categories" },
           ].map((stat) => (
             <div key={stat.label} className="text-center sm:text-left">
-              <p className="font-display text-2xl font-semibold text-stone-900 sm:text-3xl">
-                {stat.value}
-              </p>
-              <p className="mt-1 text-xs text-stone-500 sm:text-sm">{stat.label}</p>
+              <p className="font-display text-3xl font-semibold text-foreground sm:text-4xl">{stat.value}</p>
+              <p className="mt-2 text-sm text-subtle-foreground">{stat.label}</p>
             </div>
           ))}
         </div>

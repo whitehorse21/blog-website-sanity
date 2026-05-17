@@ -10,6 +10,7 @@ import { PortableTextRenderer } from "@/components/blog/PortableTextRenderer";
 import { Badge } from "@/components/ui/Badge";
 import { ROUTES } from "@/lib/constants";
 import { getPostBySlug, getPostSlugs, getRelatedPosts } from "@/lib/data";
+import { section } from "@/lib/layout";
 
 export const revalidate = 60;
 
@@ -50,8 +51,9 @@ export default async function PostPage({ params }: PageProps) {
 
   return (
     <article>
-      <header className="border-b border-stone-200/80 bg-white">
-        <Container className="py-12 sm:py-16 lg:py-20">
+      <header className={`relative border-b border-border bg-surface ${section.pyCompact}`}>
+        <div className="pointer-events-none absolute inset-0 section-mesh opacity-20" aria-hidden />
+        <Container className="relative">
           <div className="mx-auto max-w-3xl text-center">
             <div className="flex flex-wrap items-center justify-center gap-2">
               {post.categories.map((cat) => (
@@ -63,10 +65,10 @@ export default async function PostPage({ params }: PageProps) {
                 />
               ))}
             </div>
-            <h1 className="font-display mt-6 text-4xl font-semibold leading-tight text-stone-900 sm:text-5xl lg:text-6xl">
+            <h1 className="font-display mt-6 text-4xl font-semibold leading-tight text-foreground sm:text-5xl lg:text-6xl">
               {post.title}
             </h1>
-            <p className="mt-6 text-lg leading-relaxed text-stone-600 sm:text-xl">{post.excerpt}</p>
+            <p className="mt-6 text-lg leading-relaxed text-muted-foreground sm:text-xl">{post.excerpt}</p>
             <PostByline
               author={post.author}
               publishedAt={post.publishedAt}
@@ -84,12 +86,12 @@ export default async function PostPage({ params }: PageProps) {
         </div>
       </div>
 
-      <Container className="py-14 sm:py-16">
+      <Container className={`bg-background ${section.pyCompact}`}>
         <div className="mx-auto max-w-3xl">
           {post.body && post.body.length > 0 ? (
             <PortableTextRenderer value={post.body} />
           ) : (
-            <p className="text-lg text-stone-600">Content coming soon.</p>
+            <p className="text-lg text-muted-foreground">Content coming soon.</p>
           )}
 
           <div className="mt-14">
@@ -99,12 +101,12 @@ export default async function PostPage({ params }: PageProps) {
       </Container>
 
       {relatedPosts.length > 0 && (
-        <section className="border-t border-stone-200/80 bg-stone-50 py-14 sm:py-16">
+        <section className={`border-t border-border bg-surface-muted ${section.pyCompact}`}>
           <Container>
-            <h2 className="font-display text-2xl font-semibold text-stone-900 sm:text-3xl">
+            <h2 className="font-display text-2xl font-semibold text-foreground sm:text-3xl">
               Related stories
             </h2>
-            <div className="mt-8 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+            <div className={`mt-10 grid sm:grid-cols-2 lg:grid-cols-3 ${section.cardGrid}`}>
               {relatedPosts.map((related) => (
                 <PostCard key={related._id} post={related} />
               ))}

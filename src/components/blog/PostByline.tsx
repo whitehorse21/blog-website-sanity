@@ -27,20 +27,20 @@ export function PostByline({
     <div
       className={cn(
         "flex flex-wrap items-center gap-2 text-sm",
-        isLight ? "text-stone-300" : "text-stone-500",
+        isLight ? "text-stone-300" : "text-subtle-foreground",
         className,
       )}
     >
       {showAvatar && (
         <div className="flex items-center gap-2">
           <AuthorAvatar author={author} size={avatarSize} />
-          <span className={cn("font-medium", isLight ? "text-stone-200" : "text-stone-800")}>
+          <span className={cn("font-medium", isLight ? "text-stone-200" : "text-foreground")}>
             {author.name}
           </span>
         </div>
       )}
       {!showAvatar && (
-        <span className={cn("font-medium", isLight ? "text-stone-200" : "text-stone-800")}>
+        <span className={cn("font-medium", isLight ? "text-stone-200" : "text-foreground")}>
           {author.name}
         </span>
       )}

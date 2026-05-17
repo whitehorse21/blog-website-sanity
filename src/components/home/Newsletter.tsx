@@ -1,10 +1,11 @@
 import { Container } from "@/components/layout/Container";
+import { section } from "@/lib/layout";
 
 export function Newsletter() {
   return (
-    <section className="py-16 sm:py-20">
+    <section className={`bg-background ${section.pyCompact}`}>
       <Container>
-        <div className="relative overflow-hidden rounded-3xl bg-stone-900 px-6 py-14 sm:px-12 sm:py-16 lg:px-16">
+        <div className="inverted-band relative overflow-hidden rounded-3xl px-6 py-14 sm:px-12 sm:py-16 lg:px-16 lg:py-20">
           <div
             className="pointer-events-none absolute -right-20 -top-20 h-64 w-64 rounded-full bg-amber-500/20 blur-3xl"
             aria-hidden
@@ -14,13 +15,11 @@ export function Newsletter() {
             aria-hidden
           />
           <div className="relative mx-auto max-w-2xl text-center">
-            <h2 className="font-display text-3xl font-semibold text-white sm:text-4xl">
-              Stay in the loop
-            </h2>
-            <p className="mt-4 text-base leading-relaxed text-stone-400 sm:text-lg">
+            <h2 className="font-display text-3xl font-semibold sm:text-4xl">Stay in the loop</h2>
+            <p className="mt-5 text-base leading-relaxed text-inverted-muted sm:text-lg">
               Get our best stories delivered to your inbox every week. No spam, unsubscribe anytime.
             </p>
-            <form className="mt-8 flex flex-col gap-3 sm:flex-row sm:gap-2" action="#" method="post">
+            <form className="mt-10 flex flex-col gap-3 sm:flex-row sm:gap-3" action="#" method="post">
               <label htmlFor="email" className="sr-only">
                 Email address
               </label>
@@ -30,7 +29,7 @@ export function Newsletter() {
                 type="email"
                 required
                 placeholder="you@example.com"
-                className="flex-1 rounded-full border border-stone-700 bg-stone-800 px-5 py-3.5 text-sm text-white placeholder:text-stone-500 focus:border-amber-500 focus:outline-none focus:ring-2 focus:ring-amber-500/30"
+                className="flex-1 rounded-full border border-inverted bg-black/20 px-5 py-3.5 text-sm placeholder:text-inverted-muted focus:border-amber-500 focus:outline-none focus:ring-2 focus:ring-amber-500/30"
               />
               <button
                 type="submit"
@@ -39,7 +38,7 @@ export function Newsletter() {
                 Subscribe
               </button>
             </form>
-            <p className="mt-4 text-xs text-stone-500">
+            <p className="mt-5 text-xs text-inverted-muted">
               Join 12,000+ readers. We respect your privacy.
             </p>
           </div>

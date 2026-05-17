@@ -3,6 +3,7 @@ import { Container } from "@/components/layout/Container";
 import { BlogPageHeader } from "@/components/blog/BlogPageHeader";
 import { PostCard } from "@/components/blog/PostCard";
 import { getCategories, getPosts } from "@/lib/data";
+import { section } from "@/lib/layout";
 import { formatArticleCount } from "@/lib/utils";
 
 export const metadata: Metadata = {
@@ -25,10 +26,10 @@ export default async function BlogPage() {
         activeCategorySlug={null}
       />
 
-      <section className="py-14 sm:py-16">
+      <section className={`bg-background ${section.pyCompact}`}>
         <Container>
-          <p className="mb-8 text-sm text-stone-500">{formatArticleCount(posts.length)}</p>
-          <div className="grid gap-8 lg:grid-cols-2">
+          <p className="mb-10 text-sm text-subtle-foreground">{formatArticleCount(posts.length)}</p>
+          <div className={`grid lg:grid-cols-2 ${section.cardGrid}`}>
             {posts.map((post, index) => (
               <PostCard
                 key={post._id}

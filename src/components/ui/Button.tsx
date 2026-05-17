@@ -5,12 +5,12 @@ type Variant = "primary" | "secondary" | "ghost" | "outline";
 
 const variants: Record<Variant, string> = {
   primary:
-    "bg-stone-900 text-stone-50 hover:bg-stone-800 shadow-sm shadow-stone-900/10",
+    "bg-foreground text-background hover:opacity-90 shadow-sm shadow-stone-900/10 dark:shadow-none",
   secondary:
-    "bg-amber-600 text-white hover:bg-amber-700 shadow-sm shadow-amber-600/20",
-  ghost: "text-stone-700 hover:bg-stone-100 hover:text-stone-900",
+    "bg-amber-600 text-white hover:bg-amber-500 shadow-sm shadow-amber-600/20 dark:bg-amber-500 dark:hover:bg-amber-400",
+  ghost: "text-muted-foreground hover:bg-surface-muted hover:text-foreground",
   outline:
-    "border border-stone-300 text-stone-800 hover:border-stone-400 hover:bg-stone-50",
+    "border border-border text-foreground hover:border-stone-400 hover:bg-surface-muted dark:hover:border-stone-600",
 };
 
 interface ButtonProps {

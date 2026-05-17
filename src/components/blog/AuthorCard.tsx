@@ -7,17 +7,17 @@ interface AuthorCardProps {
 
 export function AuthorCard({ author }: AuthorCardProps) {
   return (
-    <aside className="rounded-2xl border border-stone-200 bg-stone-50 p-6 sm:p-8">
+    <aside className="rounded-2xl border border-border bg-surface-muted p-6 sm:p-8">
       <div className="flex flex-col items-center text-center sm:flex-row sm:items-start sm:text-left">
-        <AuthorAvatar author={author} size="lg" className="shadow-md ring-white" />
+        <AuthorAvatar author={author} size="lg" className="shadow-md ring-surface dark:ring-stone-700" />
         <div className="mt-4 sm:mt-0 sm:ml-6">
-          <p className="text-xs font-semibold uppercase tracking-wider text-amber-700">
+          <p className="text-xs font-semibold uppercase tracking-wider text-amber-700 dark:text-amber-400">
             Written by
           </p>
-          <h3 className="font-display mt-1 text-xl font-semibold text-stone-900">{author.name}</h3>
-          {author.role && <p className="text-sm text-stone-500">{author.role}</p>}
+          <h3 className="font-display mt-1 text-xl font-semibold text-foreground">{author.name}</h3>
+          {author.role && <p className="text-sm text-subtle-foreground">{author.role}</p>}
           {author.bio && (
-            <p className="mt-3 text-sm leading-relaxed text-stone-600">{author.bio}</p>
+            <p className="mt-3 text-sm leading-relaxed text-muted-foreground">{author.bio}</p>
           )}
           <div className="mt-4 flex justify-center gap-3 sm:justify-start">
             {author.twitter && (
@@ -25,7 +25,7 @@ export function AuthorCard({ author }: AuthorCardProps) {
                 href={author.twitter}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="text-stone-400 transition-colors hover:text-amber-700"
+                className="text-subtle-foreground transition-colors hover:text-amber-700 dark:hover:text-amber-400"
                 aria-label={`${author.name} on Twitter`}
               >
                 <svg className="h-5 w-5" fill="currentColor" viewBox="0 0 24 24">
@@ -38,7 +38,7 @@ export function AuthorCard({ author }: AuthorCardProps) {
                 href={author.linkedin}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="text-stone-400 transition-colors hover:text-amber-700"
+                className="text-subtle-foreground transition-colors hover:text-amber-700 dark:hover:text-amber-400"
                 aria-label={`${author.name} on LinkedIn`}
               >
                 <svg className="h-5 w-5" fill="currentColor" viewBox="0 0 24 24">

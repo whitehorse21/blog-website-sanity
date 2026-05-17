@@ -35,7 +35,7 @@ export function AuthorAvatar({
       src={url}
       alt={image?.alt || name}
       className={cn(
-        "rounded-full object-cover ring-stone-100",
+        "rounded-full object-cover ring-surface dark:ring-stone-700",
         sizeClasses[size],
         className,
       )}

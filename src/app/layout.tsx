@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { Cormorant_Garamond, Plus_Jakarta_Sans } from "next/font/google";
+import { ThemeProvider } from "@/components/providers/ThemeProvider";
 import { SiteChrome } from "@/components/layout/SiteChrome";
 import "./globals.css";
 
@@ -41,9 +42,11 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className={`${sans.variable} ${display.variable} h-full`}>
-      <body className="flex min-h-full flex-col antialiased">
-        <SiteChrome>{children}</SiteChrome>
+    <html lang="en" className={`${sans.variable} ${display.variable} h-full`} suppressHydrationWarning>
+      <body className="flex min-h-full flex-col bg-background text-foreground antialiased">
+        <ThemeProvider>
+          <SiteChrome>{children}</SiteChrome>
+        </ThemeProvider>
       </body>
     </html>
   );

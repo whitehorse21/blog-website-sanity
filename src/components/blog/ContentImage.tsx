@@ -38,7 +38,7 @@ export function ContentImage({
         />
       </div>
       {caption && (
-        <figcaption className="mt-3 text-center text-sm text-stone-500">{caption}</figcaption>
+        <figcaption className="mt-3 text-center text-sm text-subtle-foreground">{caption}</figcaption>
       )}
     </figure>
   );

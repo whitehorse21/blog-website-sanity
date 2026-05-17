@@ -17,7 +17,7 @@ export function BackLink({
     <Link
       href={href}
       className={cn(
-        "text-sm font-medium text-amber-700 transition-colors hover:text-amber-900",
+        "text-sm font-medium text-amber-700 transition-colors hover:text-amber-900 dark:text-amber-400 dark:hover:text-amber-300",
         className,
       )}
     >

@@ -4,6 +4,7 @@ import { Container } from "@/components/layout/Container";
 import { BlogPageHeader } from "@/components/blog/BlogPageHeader";
 import { PostCard } from "@/components/blog/PostCard";
 import { getCategories, getPostsByCategory } from "@/lib/data";
+import { section } from "@/lib/layout";
 
 export const revalidate = 60;
 
@@ -47,16 +48,16 @@ export default async function CategoryPage({ params }: PageProps) {
         activeCategorySlug={slug}
       />
 
-      <section className="py-14 sm:py-16">
+      <section className={`bg-background ${section.pyCompact}`}>
         <Container>
           {posts.length > 0 ? (
-            <div className="grid gap-8 sm:grid-cols-2 lg:grid-cols-3">
+            <div className={`grid sm:grid-cols-2 lg:grid-cols-3 ${section.cardGrid}`}>
               {posts.map((post) => (
                 <PostCard key={post._id} post={post} />
               ))}
             </div>
           ) : (
-            <p className="text-center text-stone-500">No articles in this category yet.</p>
+            <p className="text-center text-subtle-foreground">No articles in this category yet.</p>
           )}
         </Container>
       </section>

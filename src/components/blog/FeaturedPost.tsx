@@ -44,7 +44,7 @@ export function FeaturedPost({ post, size = "hero" }: FeaturedPostProps) {
   }
 
   return (
-    <article className="group relative overflow-hidden rounded-3xl bg-stone-900 shadow-2xl shadow-stone-900/20">
+    <article className="inverted-band group relative overflow-hidden rounded-3xl shadow-2xl shadow-black/25">
       <div className="relative aspect-[16/9] min-h-[420px] sm:aspect-[21/9] lg:min-h-[520px]">
         <PostImage
           image={post.mainImage}

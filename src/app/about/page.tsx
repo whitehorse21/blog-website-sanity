@@ -6,6 +6,7 @@ import { Button } from "@/components/ui/Button";
 import { ABOUT_HERO_IMAGE, aboutValues } from "@/lib/about-content";
 import { ROUTES } from "@/lib/constants";
 import { getAuthors } from "@/lib/data";
+import { section } from "@/lib/layout";
 
 export const metadata: Metadata = {
   title: "About",
@@ -17,8 +18,9 @@ export default async function AboutPage() {
 
   return (
     <>
-      <section className="border-b border-stone-200/80 bg-white py-16 sm:py-24">
-        <Container>
+      <section className={`relative border-b border-border bg-surface ${section.py}`}>
+        <div className="pointer-events-none absolute inset-0 section-mesh opacity-25" aria-hidden />
+        <Container className="relative">
           <SectionHeader
             eyebrow="About us"
             title="We believe stories shape how we see the world"
@@ -28,10 +30,10 @@ export default async function AboutPage() {
         </Container>
       </section>
 
-      <section className="py-16 sm:py-20">
+      <section className={`bg-background ${section.py}`}>
         <Container>
-          <div className="grid items-center gap-12 lg:grid-cols-2 lg:gap-16">
-            <div className="relative aspect-[4/5] overflow-hidden rounded-3xl bg-stone-200 shadow-xl">
+          <div className={`grid items-center lg:grid-cols-2 ${section.grid}`}>
+            <div className="relative aspect-[4/5] overflow-hidden rounded-3xl bg-surface-muted shadow-xl ring-1 ring-border">
               {/* eslint-disable-next-line @next/next/no-img-element */}
               <img
                 src={ABOUT_HERO_IMAGE}
@@ -43,19 +45,19 @@ export default async function AboutPage() {
               />
             </div>
             <div>
-              <h2 className="font-display text-3xl font-semibold text-stone-900 sm:text-4xl">
+              <h2 className="font-display text-3xl font-semibold text-foreground sm:text-4xl">
                 An editorial studio for the curious
               </h2>
-              <p className="mt-6 text-base leading-relaxed text-stone-600">
+              <p className="mt-6 text-base leading-relaxed text-muted-foreground">
                 We partner with practitioners—designers, engineers, photographers, and thinkers—who
                 have something substantive to say. Our production process includes developmental
                 editing, fact-checking, and art direction so every piece meets a high bar.
               </p>
-              <p className="mt-4 text-base leading-relaxed text-stone-600">
+              <p className="mt-5 text-base leading-relaxed text-muted-foreground">
                 Content is managed in Sanity CMS, giving our team a flexible, structured workflow
                 while keeping the front end fast and beautiful with Next.js.
               </p>
-              <div className="mt-8">
+              <div className="mt-10">
                 <Button href={ROUTES.blog} variant="secondary">
                   Read our stories
                 </Button>
@@ -65,27 +67,24 @@ export default async function AboutPage() {
         </Container>
       </section>
 
-      <section className="border-y border-stone-200/80 bg-stone-50 py-16 sm:py-20">
+      <section className={`border-y border-border bg-surface-muted ${section.py}`}>
         <Container>
-          <h2 className="font-display text-center text-3xl font-semibold text-stone-900 sm:text-4xl">
+          <h2 className="font-display text-center text-3xl font-semibold text-foreground sm:text-4xl">
             What we stand for
           </h2>
-          <div className="mt-12 grid gap-8 md:grid-cols-3">
+          <div className={`mt-14 grid md:grid-cols-3 ${section.cardGrid}`}>
             {aboutValues.map((value) => (
-              <div
-                key={value.title}
-                className="rounded-2xl border border-stone-200/80 bg-white p-8 shadow-sm"
-              >
-                <div className="mb-4 h-1 w-12 rounded-full bg-amber-500" />
-                <h3 className="font-display text-xl font-semibold text-stone-900">{value.title}</h3>
-                <p className="mt-3 text-sm leading-relaxed text-stone-600">{value.description}</p>
+              <div key={value.title} className="editorial-card rounded-2xl p-8">
+                <div className="mb-5 h-1 w-12 rounded-full bg-amber-500" />
+                <h3 className="font-display text-xl font-semibold text-foreground">{value.title}</h3>
+                <p className="mt-4 text-sm leading-relaxed text-muted-foreground">{value.description}</p>
               </div>
             ))}
           </div>
         </Container>
       </section>
 
-      <section id="team" className="py-16 sm:py-20">
+      <section id="team" className={`bg-background ${section.py}`}>
         <Container>
           <SectionHeader
             eyebrow="The team"
@@ -93,7 +92,7 @@ export default async function AboutPage() {
             align="center"
             className="justify-center"
           />
-          <div className="mt-12 grid gap-8 sm:grid-cols-2 lg:grid-cols-3">
+          <div className={`mt-14 grid sm:grid-cols-2 lg:grid-cols-3 ${section.cardGrid}`}>
             {authors.map((author) => (
               <TeamMemberCard key={author._id} author={author} />
             ))}
@@ -101,18 +100,16 @@ export default async function AboutPage() {
         </Container>
       </section>
 
-      <section id="contact" className="border-t border-stone-200/80 bg-stone-900 py-16 sm:py-20">
+      <section id="contact" className={`inverted-band border-t border-inverted ${section.py}`}>
         <Container>
           <div className="mx-auto max-w-2xl text-center">
-            <h2 className="font-display text-3xl font-semibold text-white sm:text-4xl">
-              Work with us
-            </h2>
-            <p className="mt-4 text-stone-400">
+            <h2 className="font-display text-3xl font-semibold sm:text-4xl">Work with us</h2>
+            <p className="mt-5 text-inverted-muted">
               Interested in contributing, partnering, or advertising? We&apos;d love to hear from you.
             </p>
             <a
               href="mailto:hello@inkwell.blog"
-              className="mt-6 inline-block text-lg font-medium text-amber-400 transition-colors hover:text-amber-300"
+              className="mt-8 inline-block text-lg font-medium text-amber-400 transition-colors hover:text-amber-300"
             >
               hello@inkwell.blog
             </a>

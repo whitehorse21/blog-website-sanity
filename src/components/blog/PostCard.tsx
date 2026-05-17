@@ -12,6 +12,8 @@ interface PostCardProps {
   className?: string;
 }
 
+const cardBase = "editorial-card overflow-hidden rounded-2xl";
+
 export function PostCard({ post, variant = "default", className }: PostCardProps) {
   const primaryCategory = post.categories[0];
   const postHref = ROUTES.blogPost(post.slug);
@@ -20,7 +22,8 @@ export function PostCard({ post, variant = "default", className }: PostCardProps
     return (
       <article
         className={cn(
-          "group grid gap-6 overflow-hidden rounded-2xl border border-stone-200/80 bg-white p-4 shadow-sm transition-all duration-300 hover:border-stone-300 hover:shadow-md sm:grid-cols-[200px_1fr] sm:p-5 lg:grid-cols-[280px_1fr]",
+          "group grid gap-6 p-4 sm:grid-cols-[200px_1fr] sm:p-6 lg:grid-cols-[280px_1fr]",
+          cardBase,
           className,
         )}
       >
@@ -29,7 +32,10 @@ export function PostCard({ post, variant = "default", className }: PostCardProps
           className="relative aspect-[4/3] overflow-hidden rounded-xl sm:aspect-auto sm:min-h-[180px]"
         >
           <PostImage image={post.mainImage} alt={post.title} sizes="280px" />
-          <div className="absolute inset-0 bg-stone-900/0 transition-colors group-hover:bg-stone-900/10" />
+          <div
+            className="absolute inset-0 bg-foreground/0 transition-colors group-hover:bg-foreground/5"
+            aria-hidden
+          />
         </Link>
         <PostCardContent post={post} primaryCategory={primaryCategory} />
       </article>
@@ -40,14 +46,14 @@ export function PostCard({ post, variant = "default", className }: PostCardProps
     return (
       <article className={cn("group", className)}>
         <Link href={postHref} className="flex gap-4">
-          <div className="relative h-20 w-20 shrink-0 overflow-hidden rounded-lg">
+          <div className="relative h-20 w-20 shrink-0 overflow-hidden rounded-lg ring-1 ring-border">
             <PostImage image={post.mainImage} alt={post.title} sizes="80px" />
           </div>
           <div className="min-w-0 flex-1">
-            <h3 className="font-display text-base font-semibold leading-snug text-stone-900 transition-colors group-hover:text-amber-700 line-clamp-2">
+            <h3 className="font-display text-base font-semibold leading-snug text-foreground transition-colors group-hover:text-amber-700 dark:group-hover:text-amber-400 line-clamp-2">
               {post.title}
             </h3>
-            <p className="mt-1 text-xs text-stone-500">{formatShortDate(post.publishedAt)}</p>
+            <p className="mt-1.5 text-xs text-subtle-foreground">{formatShortDate(post.publishedAt)}</p>
           </div>
         </Link>
       </article>
@@ -55,17 +61,15 @@ export function PostCard({ post, variant = "default", className }: PostCardProps
   }
 
   return (
-    <article
-      className={cn(
-        "group flex flex-col overflow-hidden rounded-2xl border border-stone-200/80 bg-white shadow-sm transition-all duration-300 hover:border-stone-300 hover:shadow-lg",
-        className,
-      )}
-    >
+    <article className={cn("group flex flex-col", cardBase, className)}>
       <Link href={postHref} className="relative aspect-[16/10] overflow-hidden">
         <PostImage image={post.mainImage} alt={post.title} />
-        <div className="absolute inset-0 bg-gradient-to-t from-stone-900/50 via-transparent to-transparent opacity-0 transition-opacity duration-300 group-hover:opacity-100" />
+        <div
+          className="absolute inset-0 bg-gradient-to-t from-foreground/40 via-transparent to-transparent opacity-0 transition-opacity duration-300 group-hover:opacity-100"
+          aria-hidden
+        />
       </Link>
-      <div className="flex flex-1 flex-col p-5 sm:p-6">
+      <div className="flex flex-1 flex-col p-6 sm:p-7">
         <PostCardContent post={post} primaryCategory={primaryCategory} />
       </div>
     </article>
@@ -81,7 +85,7 @@ function PostCardContent({
 }) {
   return (
     <>
-      <div className="mb-3 flex flex-wrap items-center gap-2">
+      <div className="mb-4 flex flex-wrap items-center gap-2">
         {primaryCategory && (
           <Badge
             label={primaryCategory.title}
@@ -90,26 +94,26 @@ function PostCardContent({
           />
         )}
         {post.readingTime && (
-          <span className="text-xs text-stone-400">{formatReadingTime(post.readingTime)}</span>
+          <span className="text-xs text-subtle-foreground">{formatReadingTime(post.readingTime)}</span>
         )}
       </div>
       <Link href={ROUTES.blogPost(post.slug)}>
-        <h3 className="font-display text-xl font-semibold leading-snug text-stone-900 transition-colors group-hover:text-amber-800 sm:text-2xl">
+        <h3 className="font-display text-xl font-semibold leading-snug text-foreground transition-colors group-hover:text-amber-800 dark:group-hover:text-amber-400 sm:text-2xl">
           {post.title}
         </h3>
       </Link>
-      <p className="mt-3 flex-1 text-sm leading-relaxed text-stone-600 line-clamp-3">
+      <p className="mt-3 flex-1 text-sm leading-relaxed text-muted-foreground line-clamp-3">
         {post.excerpt}
       </p>
-      <div className="mt-5 flex items-center justify-between border-t border-stone-100 pt-4">
-        <div className="flex items-center gap-2.5">
+      <div className="mt-6 flex items-center justify-between border-t border-border pt-5">
+        <div className="flex items-center gap-3">
           <AuthorAvatar author={post.author} size="sm" />
           <div>
-            <p className="text-sm font-medium text-stone-800">{post.author.name}</p>
-            <p className="text-xs text-stone-500">{formatShortDate(post.publishedAt)}</p>
+            <p className="text-sm font-medium text-foreground">{post.author.name}</p>
+            <p className="text-xs text-subtle-foreground">{formatShortDate(post.publishedAt)}</p>
           </div>
         </div>
-        <span className="text-sm font-medium text-amber-700 opacity-0 transition-opacity group-hover:opacity-100">
+        <span className="text-sm font-medium text-amber-700 opacity-0 transition-opacity group-hover:opacity-100 dark:text-amber-400">
           Read →
         </span>
       </div>

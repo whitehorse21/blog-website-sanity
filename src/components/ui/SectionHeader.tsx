@@ -30,11 +30,13 @@ export function SectionHeader({
     >
       <div className={cn(isCenter && "mx-auto max-w-3xl")}>
         {eyebrow && (
-          <p className="text-xs font-semibold uppercase tracking-widest text-amber-700">{eyebrow}</p>
+          <p className="text-xs font-semibold uppercase tracking-widest text-amber-700 dark:text-amber-400">
+            {eyebrow}
+          </p>
         )}
         <h2
           className={cn(
-            "font-display font-semibold text-stone-900",
+            "font-display font-semibold text-foreground",
             eyebrow ? "mt-2 text-3xl sm:text-4xl" : "text-3xl sm:text-4xl",
             isCenter && eyebrow && "mt-3",
           )}
@@ -44,7 +46,7 @@ export function SectionHeader({
         {description && (
           <p
             className={cn(
-              "mt-4 text-lg text-stone-600",
+              "mt-4 text-lg text-muted-foreground",
               isCenter ? "sm:text-xl" : "max-w-2xl",
             )}
           >
@@ -55,7 +57,7 @@ export function SectionHeader({
       {action && !isCenter && (
         <Link
           href={action.href}
-          className="text-sm font-medium text-amber-700 transition-colors hover:text-amber-900"
+          className="text-sm font-medium text-amber-700 transition-colors hover:text-amber-900 dark:text-amber-400 dark:hover:text-amber-300"
         >
           {action.label}
         </Link>

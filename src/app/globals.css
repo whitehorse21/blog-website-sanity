@@ -1,17 +1,77 @@
 @import "tailwindcss";
 
+@custom-variant dark (&:where(.dark, .dark *));
+
+/* ─── Light theme ─── */
 :root {
+  color-scheme: light;
   --background: #faf8f5;
+  --surface: #ffffff;
+  --surface-muted: #f5f4f0;
+  --surface-elevated: #ffffff;
   --foreground: #1c1917;
+  --muted-foreground: #57534e;
+  --subtle-foreground: #78716c;
+  --border: #e7e5e4;
+  --border-subtle: rgb(231 229 228 / 0.6);
   --accent: #d97706;
-  --muted: #78716c;
+  --accent-muted: #fef3c7;
+  --accent-foreground: #92400e;
+  --selection-bg: rgb(251 191 36 / 0.35);
+  --selection-fg: #1c1917;
+  --hero-glow: rgba(217, 119, 6, 0.14);
+  --hero-glow-secondary: rgba(120, 113, 108, 0.08);
+  --card-shadow: 0 1px 2px rgb(28 25 23 / 0.04), 0 8px 24px rgb(28 25 23 / 0.06);
+  --card-shadow-hover: 0 4px 12px rgb(28 25 23 / 0.08), 0 16px 40px rgb(28 25 23 / 0.1);
+  --header-bg: rgb(250 248 245 / 0.88);
+  --mesh-opacity: 0.45;
+  --inverted-bg: #1c1917;
+  --inverted-fg: #fafaf9;
+  --inverted-muted: #a8a29e;
+  --inverted-border: #44403c;
 }
 
-@theme inline {
+/* ─── Dark theme ─── */
+.dark {
+  color-scheme: dark;
+  --background: #0a0908;
+  --surface: #171412;
+  --surface-muted: #1f1c1a;
+  --surface-elevated: #262220;
+  --foreground: #fafaf9;
+  --muted-foreground: #d6d3d1;
+  --subtle-foreground: #a8a29e;
+  --border: #3f3a36;
+  --border-subtle: rgb(68 64 60 / 0.65);
+  --accent: #f59e0b;
+  --accent-muted: rgb(120 53 15 / 0.45);
+  --accent-foreground: #fcd34d;
+  --selection-bg: rgb(245 158 11 / 0.3);
+  --selection-fg: #fafaf9;
+  --hero-glow: rgba(245, 158, 11, 0.18);
+  --hero-glow-secondary: rgba(168, 162, 158, 0.1);
+  --card-shadow: 0 1px 2px rgb(0 0 0 / 0.2), 0 8px 24px rgb(0 0 0 / 0.35);
+  --card-shadow-hover: 0 4px 16px rgb(0 0 0 / 0.35), 0 20px 48px rgb(0 0 0 / 0.45);
+  --header-bg: rgb(10 9 8 / 0.9);
+  --mesh-opacity: 0.65;
+  --inverted-bg: #0c0a09;
+  --inverted-fg: #fafaf9;
+  --inverted-muted: #a8a29e;
+  --inverted-border: #292524;
+}
+
+@theme {
   --color-background: var(--background);
+  --color-surface: var(--surface);
+  --color-surface-muted: var(--surface-muted);
+  --color-surface-elevated: var(--surface-elevated);
   --color-foreground: var(--foreground);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-subtle-foreground: var(--subtle-foreground);
+  --color-border: var(--border);
   --color-accent: var(--accent);
-  --color-muted: var(--muted);
+  --color-accent-muted: var(--accent-muted);
+  --color-accent-foreground: var(--accent-foreground);
   --font-sans: var(--font-sans);
   --font-display: var(--font-display);
 }
@@ -22,14 +82,17 @@
   }
 
   body {
-    background: var(--background);
+    background-color: var(--background);
     color: var(--foreground);
     font-family: var(--font-sans), system-ui, sans-serif;
+    transition:
+      background-color 0.25s ease,
+      color 0.25s ease;
   }
 
   ::selection {
-    background-color: rgb(251 191 36 / 0.35);
-    color: #1c1917;
+    background-color: var(--selection-bg);
+    color: var(--selection-fg);
   }
 }
 
@@ -50,5 +113,78 @@
     -webkit-line-clamp: 3;
     -webkit-box-orient: vertical;
     overflow: hidden;
+  }
+
+  /* Semantic colors — always read live CSS variables */
+  .bg-background {
+    background-color: var(--background);
+  }
+  .bg-surface {
+    background-color: var(--surface);
+  }
+  .bg-surface-muted {
+    background-color: var(--surface-muted);
+  }
+  .bg-surface-elevated {
+    background-color: var(--surface-elevated);
+  }
+  .bg-header {
+    background-color: var(--header-bg);
+  }
+  .text-foreground {
+    color: var(--foreground);
+  }
+  .text-muted-foreground {
+    color: var(--muted-foreground);
+  }
+  .text-subtle-foreground {
+    color: var(--subtle-foreground);
+  }
+  .text-accent-foreground {
+    color: var(--accent-foreground);
+  }
+  .border-border {
+    border-color: var(--border);
+  }
+  .border-border-subtle {
+    border-color: var(--border-subtle);
+  }
+  .bg-accent-muted {
+    background-color: var(--accent-muted);
+  }
+
+  .section-mesh {
+    background-image:
+      radial-gradient(ellipse 80% 50% at 20% -10%, var(--hero-glow), transparent 55%),
+      radial-gradient(ellipse 60% 40% at 90% 10%, var(--hero-glow-secondary), transparent 50%);
+    opacity: var(--mesh-opacity);
+  }
+
+  .editorial-card {
+    background-color: var(--surface);
+    border: 1px solid var(--border);
+    box-shadow: var(--card-shadow);
+    transition:
+      border-color 0.2s ease,
+      box-shadow 0.25s ease,
+      transform 0.25s ease;
+  }
+
+  .editorial-card:hover {
+    border-color: color-mix(in srgb, var(--accent) 35%, var(--border));
+    box-shadow: var(--card-shadow-hover);
+  }
+
+  .inverted-band {
+    background-color: var(--inverted-bg);
+    color: var(--inverted-fg);
+  }
+
+  .text-inverted-muted {
+    color: var(--inverted-muted);
+  }
+
+  .border-inverted {
+    border-color: var(--inverted-border);
   }
 }
