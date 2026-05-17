@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Cormorant_Garamond, Plus_Jakarta_Sans } from "next/font/google";
 import { ThemeProvider } from "@/components/providers/ThemeProvider";
 import { SiteChrome } from "@/components/layout/SiteChrome";
+import { Analytics } from "@vercel/analytics/next"
 import "./globals.css";
 
 const sans = Plus_Jakarta_Sans({
@@ -48,6 +49,7 @@ export default function RootLayout({
           <SiteChrome>{children}</SiteChrome>
         </ThemeProvider>
       </body>
+      <Analytics/>
     </html>
   );
 }
